@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../services/pix_service.dart';
@@ -126,9 +128,21 @@ class _DoacaoPixState extends State<DoacaoPix> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: ElevatedButton(
-                              onPressed: () {
-                                // ação do botão
+                              onPressed: () async {
+                                pixService.valorController.text = "10.00"; // define o valor fixo
+                                pixService.pixController.text = "sua_chave_pix_aqui"; // chave pix
+
+                                setState(() => _isLoading = true);
+                                final data = await pixService.gerarPix(context);
+                                setState(() => _isLoading = false);
+
+                                if (data != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('PIX de R\$10 gerado com sucesso!')),
+                                  );
+                                }
                               },
+
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
                                 shadowColor: Colors.transparent,
@@ -160,9 +174,21 @@ class _DoacaoPixState extends State<DoacaoPix> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: ElevatedButton(
-                              onPressed: () {
-                                // ação do botão
+                              onPressed: () async {
+                                pixService.valorController.text = "20.00"; // define o valor fixo
+                                pixService.pixController.text = "sua_chave_pix_aqui"; // chave pix
+
+                                setState(() => _isLoading = true);
+                                final data = await pixService.gerarPix(context);
+                                setState(() => _isLoading = false);
+
+                                if (data != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('PIX de R\$20 gerado com sucesso!')),
+                                  );
+                                }
                               },
+
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
                                 shadowColor: Colors.transparent,
@@ -175,7 +201,7 @@ class _DoacaoPixState extends State<DoacaoPix> {
                                 ),
                               ),
                               child: Text(
-                                "R\$10",
+                                "R\$20",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -202,9 +228,21 @@ class _DoacaoPixState extends State<DoacaoPix> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              // ação do botão
+                            onPressed: () async {
+                              pixService.valorController.text = "50.00"; // define o valor fixo
+                              pixService.pixController.text = "sua_chave_pix_aqui"; // chave pix
+
+                              setState(() => _isLoading = true);
+                              final data = await pixService.gerarPix(context);
+                              setState(() => _isLoading = false);
+
+                              if (data != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('PIX de R\$50 gerado com sucesso!')),
+                                );
+                              }
                             },
+
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
@@ -215,7 +253,7 @@ class _DoacaoPixState extends State<DoacaoPix> {
                               ),
                             ),
                             child: Text(
-                              "R\$10",
+                              "R\$50",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -233,9 +271,21 @@ class _DoacaoPixState extends State<DoacaoPix> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              // ação do botão
+                            onPressed: () async {
+                              pixService.valorController.text = "100.00"; // define o valor fixo
+                              pixService.pixController.text = "sua_chave_pix_aqui"; // chave pix
+
+                              setState(() => _isLoading = true);
+                              final data = await pixService.gerarPix(context);
+                              setState(() => _isLoading = false);
+
+                              if (data != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('PIX de R\$100 gerado com sucesso!')),
+                                );
+                              }
                             },
+
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
@@ -248,7 +298,7 @@ class _DoacaoPixState extends State<DoacaoPix> {
                               ),
                             ),
                             child: Text(
-                              "R\$10",
+                              "R\$100",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -295,6 +345,7 @@ class _DoacaoPixState extends State<DoacaoPix> {
                                 borderRadius: BorderRadius.horizontal(right: Radius.circular(30))
                             ),
                             child: TextField(
+                              controller: pixService.valorController,
                               keyboardType: TextInputType.number,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
@@ -309,58 +360,135 @@ class _DoacaoPixState extends State<DoacaoPix> {
                     )
                     ,
                     SizedBox(height: 30,),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.greenAccent, Colors.lightGreen],
-                          begin: Alignment.centerRight,
-                          end: Alignment.centerLeft,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: _isLoading
-                            ? null
-                            : () async {
-                          setState(() {
-                            _isLoading = true;
-                          });
-
-                          final data = await pixService.gerarPix(context);
-
-                          setState(() {
-                            _isLoading = false;
-                          });
-
-                          if (data != null) {
-                            setState(() {});
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('PIX gerado com sucesso!')),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 90,
-                            vertical: 25,
-                          ),
-                          shape: RoundedRectangleBorder(
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.greenAccent, Colors.lightGreen],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                            ),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        child: Text(
-                          "Gerar QR CODE",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                          child: ElevatedButton(
+                            onPressed: _isLoading
+                                ? null
+                                : () async {
+                              setState(() {
+                                _isLoading = true;
+                              });
+
+                              final data = await pixService.gerarPix(context);
+
+                              setState(() {
+                                _isLoading = false;
+                              });
+
+                              if (data != null) {
+                                setState(() {});
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('PIX gerado com sucesso!')),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 90,
+                                vertical: 25,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: const Text(
+                              "Gerar QR CODE",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        const SizedBox(height: 30),
+                        if (pixService.payload != null) ...[
+                          const Text(
+                            "QR Code PIX:",
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 15),
+                          Center(
+                            child: Card(
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Column(
+                                  children: [
+                                    QrImageView(
+                                      data: pixService.payload!,
+                                      version: QrVersions.auto,
+                                      size: 200,
+                                      backgroundColor: Colors.white,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      "Escaneie este QR Code para pagar",
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Imagem gerada pelo backend (se disponível)
+                          if (pixService.qrBase64 != null) ...[
+                            const Text(
+                              "Imagem gerada pelo servidor:",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 10),
+                            Center(
+                              child: Image.memory(
+                                base64Decode(pixService.qrBase64!),
+                                height: 200,
+                                width: 200,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                          const Text(
+                            "Payload PIX:",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.grey[300]!),
+                            ),
+                            child: SelectableText(
+                              pixService.payload!,
+                              style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                            ),
+                          ),
+                        ] else if (_isLoading) ...[
+                          const SizedBox(height: 30),
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ],
                     ),
+
                     SizedBox(height: 30,),
+
                     Container(
                       margin: EdgeInsets.only(right: 280),
                       child: Text("Ou ",
